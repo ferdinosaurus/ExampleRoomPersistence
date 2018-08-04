@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ferdi.exampleroompersistence.R;
+import com.example.ferdi.exampleroompersistence.helper.ActivityHelper;
 import com.example.ferdi.exampleroompersistence.parcelable.Mahasiswa;
 import com.example.ferdi.exampleroompersistence.presenter.MahasiswaPresenter;
 import com.example.ferdi.exampleroompersistence.sqlite.DatabaseConfig;
@@ -39,22 +40,17 @@ public class AddActivity extends AppCompatActivity implements MahasiswaView {
         et_nama = findViewById(R.id.et_nama);
         et_jurusan = findViewById(R.id.et_jurusan);
         btn_submit = findViewById(R.id.btn_submit);
-        if(!getIntent().getStringExtra("id").isEmpty()){
-            mahasiswaPresenter.getData(Integer.parseInt(getIntent().getStringExtra("id")));
-        }
+
 
     }
     public void setupListener(){
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                if(!getIntent().getStringExtra("id").isEmpty()){
-                    mahasiswa = new Mahasiswa(et_nama.getText().toString(), et_jurusan.getText().toString());
-                    mahasiswaPresenter.update(mahasiswa);
-                }else {
+
                     mahasiswa = new Mahasiswa(et_nama.getText().toString(), et_jurusan.getText().toString());
                     mahasiswaPresenter.addData(mahasiswa);
-                }
+
             }
         });
     }
@@ -72,7 +68,7 @@ public class AddActivity extends AppCompatActivity implements MahasiswaView {
     @Override
     public void status(long result) {
         if(result!=0){
-            finish();
+            ActivityHelper.showActivity(AddActivity.this,MainActivity.class,true);
         }
 
 

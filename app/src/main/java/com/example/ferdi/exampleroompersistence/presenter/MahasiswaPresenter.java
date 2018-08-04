@@ -26,8 +26,8 @@ public class MahasiswaPresenter {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-            List<Mahasiswa> mahasiswaList = databaseHelper.mahasiswaDao().getAll();
-            mahasiswaView.showAllDataUser(mahasiswaList);
+               List<Mahasiswa> mahasiswaList = databaseHelper.mahasiswaDao().getAll();
+                mahasiswaView.showAllDataUser(mahasiswaList);
             }
         });
 

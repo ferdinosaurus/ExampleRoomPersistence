@@ -48,8 +48,12 @@ public class MainActivity extends AppCompatActivity implements MahasiswaView,Ada
     public void init(){
         recyclerView = findViewById(R.id.rv_main);
         btn_add = findViewById(R.id.btn_add);
-        databaseHelper = Room.databaseBuilder(MainActivity.this,DatabaseHelper.class, DatabaseConfig.DATABASE_NAME).fallbackToDestructiveMigration().build();
+        databaseHelper = Room.databaseBuilder(MainActivity.this,DatabaseHelper.class, DatabaseConfig.DATABASE_NAME).allowMainThreadQueries().build();
         mahasiswaPresenter = new MahasiswaPresenter(this,databaseHelper);
+
+        RecyclerView.LayoutManager lm = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(lm);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     public void setupListener(){
@@ -74,9 +78,6 @@ public class MainActivity extends AppCompatActivity implements MahasiswaView,Ada
     public void showAllDataUser(List<?> mahasiswaList) {
 
         mahasiswaAdapter = new MahasiswaAdapter(this,mahasiswaList,this);
-        RecyclerView.LayoutManager lm = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(lm);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mahasiswaAdapter);
     }
 

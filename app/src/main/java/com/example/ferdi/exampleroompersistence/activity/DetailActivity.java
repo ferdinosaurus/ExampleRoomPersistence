@@ -51,7 +51,8 @@ public class DetailActivity extends AppCompatActivity implements MahasiswaView{
             @Override
             public void onClick(View view) {
                 mahasiswaPresenter.deleteData(temp_mahasiswa);
-                finish();
+                ActivityHelper.showActivity(DetailActivity.this,MainActivity.class,true);
+
             }
         });
         btn_update.setOnClickListener(new View.OnClickListener() {
