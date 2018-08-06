@@ -13,7 +13,7 @@ import com.example.ferdi.exampleroompersistence.sqlite.dao.MahasiswaDao;
  * Created by ferdi on 8/3/2018.
  */
 
-@Database(entities = {Mahasiswa.class},version = 1)
+@Database(entities = {Mahasiswa.class},version = 1, exportSchema = false)
 public abstract class DatabaseHelper extends RoomDatabase {
     public abstract MahasiswaDao mahasiswaDao();
 }

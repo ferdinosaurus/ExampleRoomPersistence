@@ -3,6 +3,7 @@ package com.example.ferdi.exampleroompersistence.activity;
 import android.arch.persistence.room.Room;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,13 +36,18 @@ public class DetailActivity extends AppCompatActivity implements MahasiswaView{
         setupListener();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mahasiswaPresenter.getData(Integer.parseInt(getIntent().getStringExtra("id")));
+    }
+
     public void init(){
         tv_jurusan = findViewById(R.id.tv_jurusan);
         tv_name = findViewById(R.id.tv_nama);
         Toast.makeText(DetailActivity.this, getIntent().getStringExtra("id"), Toast.LENGTH_SHORT).show();
-        databaseHelper = Room.databaseBuilder(DetailActivity.this,DatabaseHelper.class, DatabaseConfig.DATABASE_NAME).fallbackToDestructiveMigration().build();
+        databaseHelper = Room.databaseBuilder(DetailActivity.this,DatabaseHelper.class, DatabaseConfig.DATABASE_NAME).allowMainThreadQueries().build();
         mahasiswaPresenter = new MahasiswaPresenter(this,databaseHelper);
-        mahasiswaPresenter.getData(Integer.parseInt(getIntent().getStringExtra("id")));
         btn_update = findViewById(R.id.btn_update);
         btn_delete= findViewById(R.id.btn_delete);
     }
@@ -51,13 +57,13 @@ public class DetailActivity extends AppCompatActivity implements MahasiswaView{
             @Override
             public void onClick(View view) {
                 mahasiswaPresenter.deleteData(temp_mahasiswa);
-                ActivityHelper.showActivity(DetailActivity.this,MainActivity.class,true);
 
             }
         });
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mahasiswaPresenter.getData(Integer.parseInt(getIntent().getStringExtra("id")));
                 ActivityHelper.showActivity(DetailActivity.this,AddActivity.class,false,"id",String.valueOf(temp_mahasiswa.getId()));
             }
         });
@@ -71,12 +77,15 @@ public class DetailActivity extends AppCompatActivity implements MahasiswaView{
     @Override
     public void showData(Mahasiswa mahasiswa) {
         temp_mahasiswa = mahasiswa;
-        tv_name.setText(mahasiswa.getNama().toString());
-        tv_jurusan.setText(mahasiswa.getJurusan().toString());
+            tv_name.setText(mahasiswa.getNama().toString());
+            tv_jurusan.setText(mahasiswa.getJurusan().toString());
+
     }
 
     @Override
     public void status(long result) {
-
+        if(result!=0){
+            finish();
+        }
     }
 }

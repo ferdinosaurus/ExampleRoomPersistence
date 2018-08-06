@@ -31,6 +31,6 @@ public interface MahasiswaDao {
     @Delete
     void delete(Mahasiswa mahasiswa);
 
-    @Update
-    void update(Mahasiswa mahasiswa);
+    @Query("UPDATE mahasiswa SET nama = :nama ,jurusan=:jurusan WHERE id = :id")
+    void update(int id,String nama,String jurusan);
 }

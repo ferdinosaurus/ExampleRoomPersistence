@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MahasiswaView,Ada
     protected void onResume() {
         super.onResume();
         //bug jika function setupData active di onResume
-        //setupData();
+        setupData();
     }
 
     public void init(){
@@ -77,8 +78,12 @@ public class MainActivity extends AppCompatActivity implements MahasiswaView,Ada
     @Override
     public void showAllDataUser(List<?> mahasiswaList) {
 
-        mahasiswaAdapter = new MahasiswaAdapter(this,mahasiswaList,this);
-        recyclerView.setAdapter(mahasiswaAdapter);
+        try {
+            mahasiswaAdapter = new MahasiswaAdapter(this, mahasiswaList, this);
+            recyclerView.setAdapter(mahasiswaAdapter);
+        }catch (Exception e){
+            Log.d("catch","showAlldataUser : "+e.toString());
+        }
     }
 
     @Override
