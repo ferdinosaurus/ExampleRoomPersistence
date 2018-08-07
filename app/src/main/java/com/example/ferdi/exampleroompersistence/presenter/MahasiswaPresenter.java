@@ -1,6 +1,8 @@
 package com.example.ferdi.exampleroompersistence.presenter;
 
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.ferdi.exampleroompersistence.parcelable.Mahasiswa;
 import com.example.ferdi.exampleroompersistence.sqlite.DatabaseHelper;
@@ -64,6 +66,7 @@ public class MahasiswaPresenter {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
+
                 databaseHelper.mahasiswaDao().update(mahasiswa.getId(),mahasiswa.getNama(),mahasiswa.getJurusan());
                 mahasiswaView.status(1);
             }

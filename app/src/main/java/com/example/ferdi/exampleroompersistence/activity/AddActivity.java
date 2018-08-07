@@ -53,14 +53,13 @@ public class AddActivity extends AppCompatActivity implements MahasiswaView {
             public void onClick(View view){
                 if(getIntent().hasExtra("id")){
                     mahasiswa = new Mahasiswa(et_nama.getText().toString(), et_jurusan.getText().toString());
+                    mahasiswa.setId(Integer.parseInt(getIntent().getStringExtra("id")));
                     mahasiswaPresenter.update(mahasiswa);
                     Log.d("checkUpdate","masuk submit update");
                 }else{
                     mahasiswa = new Mahasiswa(et_nama.getText().toString(), et_jurusan.getText().toString());
                     mahasiswaPresenter.addData(mahasiswa);
                 }
-
-
             }
         });
     }

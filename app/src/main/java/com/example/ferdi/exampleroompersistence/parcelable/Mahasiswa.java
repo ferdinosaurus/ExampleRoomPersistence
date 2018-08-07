@@ -20,8 +20,6 @@ public class Mahasiswa {
         this.jurusan = jurusan;
     }
 
-
-
     public int getId() {
         return id;
     }
